@@ -1,0 +1,44 @@
+# Arquivo .gitignore - padrão para projetos Python com banco de dados
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.development
+.env.test
+
+# Arquivos do banco de dados
+*.db
+*.sqlite
+*.bak
+*.dump
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.so
+.Python
+build/
+dist/
+venv/
+env/
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.temp
+
+# Migrações (se usar sistema de migrações)
+/migrations/versions/*.py
+!migrations/versions/__init__.py
