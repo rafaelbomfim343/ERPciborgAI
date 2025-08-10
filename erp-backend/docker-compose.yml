@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - db  # Garante que o PostgreSQL inicie primeiro
+
+  db:
+    image: postgres:16  # Última versão estável
+    environment:
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=senha_segura_123  # Altere para sua senha
+      - POSTGRES_DB=meu_prod_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistência de dados
+    ports:
+      - "5432:5432"  # Opcional: expõe a porta para ferramentas externas (ex: DBeaver)
+
+volumes:
+  postgres_data:  # Volume para persistir dados mesmo se o container for removido
