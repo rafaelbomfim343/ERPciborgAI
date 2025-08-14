@@ -30,7 +30,7 @@ const generateSpec = (data: typeof conductivityData): IBarChartSpec => ({
   padding: [10, 0, 10, 0],
   legends: {
     visible: true,
-    position: "top",
+    position: "end",
   },
   stack: false,
   tooltip: {
