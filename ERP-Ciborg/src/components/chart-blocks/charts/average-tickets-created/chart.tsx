@@ -30,25 +30,7 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
     visible: true,
   },
   stack: false,
-  tooltip: {
-    trigger: ["click", "hover"],
-    mark: {
-      title: {
-        value: (datum: ChartDatum | undefined) => 
-          `Período: ${datum?.date || 'N/A'}`,
-      },
-      content: [ 
-        {
-          value: (datum: ChartDatum | undefined) => 
-            `Quantidade: ${datum?.count ?? 0}`,
-        },
-        {
-          value: (datum: ChartDatum | undefined) => 
-            `Tipo: ${datum?.type || 'N/A'}`,
-        },
-      ],
-    },
-  },
+  
   bar: {
     state: {
       hover: {
