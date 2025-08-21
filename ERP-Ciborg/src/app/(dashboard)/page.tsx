@@ -6,7 +6,7 @@ import {
   TicketByChannels,
 } from "@/components/chart-blocks";
 import Container from "@/components/container";
-import { getRelatorios } from "@/lib/api";
+
 
 export default function Home() {
   return (

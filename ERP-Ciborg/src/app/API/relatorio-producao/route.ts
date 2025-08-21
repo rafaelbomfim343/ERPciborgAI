@@ -1,5 +1,6 @@
 // src/app/api/relatorio-producao/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 interface RelatorioProducao {
   data: string;
@@ -55,9 +56,19 @@ export async function POST(request: NextRequest) {
       eficienciaPlanejamento: relatorio.atingimentoPlanejado,
     };
 
-    return NextResponse.json({ success: true, message: 'Relatório salvo com sucesso!', data: storedRelatorio, metrics }, { status: 200 });
+    // Log apenas em desenvolvimento
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Relatório salvo:', storedRelatorio);
+    }
+
+    return NextResponse.json(
+      { success: true, message: 'Relatório salvo com sucesso!', data: storedRelatorio, metrics },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Erro ao processar relatório:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Erro ao processar relatório:', error);
+    }
     return NextResponse.json({ message: 'Erro interno do servidor' }, { status: 500 });
   }
 }
@@ -66,8 +77,10 @@ export async function GET() {
   const metrics = {
     totalRelatorios: relatorios.length,
     producaoTotal: relatorios.reduce((sum, r) => sum + r.totalProducao, 0),
-    mediaAtingimentoMeta: relatorios.length > 0 ? relatorios.reduce((sum, r) => sum + r.atingimentoMeta, 0) / relatorios.length : 0,
-    mediaAtingimentoPlanejado: relatorios.length > 0 ? relatorios.reduce((sum, r) => sum + r.atingimentoPlanejado, 0) / relatorios.length : 0,
+    mediaAtingimentoMeta:
+      relatorios.length > 0 ? relatorios.reduce((sum, r) => sum + r.atingimentoMeta, 0) / relatorios.length : 0,
+    mediaAtingimentoPlanejado:
+      relatorios.length > 0 ? relatorios.reduce((sum, r) => sum + r.atingimentoPlanejado, 0) / relatorios.length : 0,
   };
 
   return NextResponse.json({ data: relatorios, total: relatorios.length, metrics }, { status: 200 });
