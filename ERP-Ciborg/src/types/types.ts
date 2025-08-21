@@ -56,5 +56,5 @@ export type ProductionMetric = {
   date: string;
   type: "Produção Real" | "Produção Planejada";
   count: number;
-  periodo?: string; 
+  periodo: number; 
 };
