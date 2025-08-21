@@ -4,9 +4,9 @@ import { useAtomValue } from "jotai";
 import { VChart } from "@visactor/react-vchart";
 import type { IBarChartSpec } from "@visactor/vchart";
 import { productionChartDataAtom } from "@/lib/atoms";
-import type { ProductionMetric } from "@/types/types";
+import type { productionMetric } from "@/types/types";
 
-const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
+const generateSpec = (data: productionMetric[]): IBarChartSpec => ({
   type: "bar",
   color: ["#2ecc71", "#3498db"],
   data: [
@@ -27,22 +27,14 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
     trigger: ["click", "hover"],
     mark: {
       title: {
-        value: (datum) => `Período: ${datum ? (datum as any).periodo || 'N/A' : 'N/A'}`,
+        value: (_datum) => `Período: ${(_datum as any)?.periodo || 'N/A'}`,
       },
       content: [
         {
-          value: (datum) => {
-            if (!datum) return 'Valor: Não disponível';
-            const safeDatum = datum as { count?: number; type?: string };
-            return `Quantidade: ${safeDatum?.count ?? 0}`;
-          },
+          value: (_datum) => `Quantidade: ${(_datum as any)?.count ?? 0}`,
         },
         {
-          value: (datum) => {
-            if (!datum) return 'Tipo: Não disponível';
-            const safeDatum = datum as { type?: string };
-            return `Tipo: ${safeDatum?.type || 'N/A'}`;
-          },
+          value: (_datum) => `Tipo: ${(_datum as any)?.type || 'N/A'}`,
         },
       ],
     },
@@ -59,8 +51,7 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
     style: {
       cornerRadius: [12, 12, 12, 12],
       zIndex: (datum) => {
-        const safeDatum = datum as { type?: string };
-        return safeDatum?.type === "real" ? 2 : 1;
+        return (datum as any)?.type === "real" ? 2 : 1;
       },
     },
   },
