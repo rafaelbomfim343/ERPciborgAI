@@ -24,14 +24,7 @@ interface FormData {
   observacoes: string;
 }
 
-const tiposVeiculo = [
-  { value: 'caminhao', label: 'Caminhão' },
-  { value: 'vuc', label: 'VUC' },
-  { value: 'carro', label: 'Carro' },
-  { value: 'moto', label: 'Moto' },
-  { value: 'transporte_externo', label: 'Transporte Externo' },
-  { value: 'outro', label: 'Outro' },
-];
+
 
 export default function RelatorioProducaoPage() {
   const [formData, setFormData] = useState<FormData>({

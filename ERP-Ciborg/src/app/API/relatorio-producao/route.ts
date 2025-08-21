@@ -2,20 +2,25 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+// Interface para dados de log
+interface LogData {
+  [key: string]: string | number | boolean | null | undefined;
+}
+
 // Logger simples para diferentes ambientes
 const logger = {
-  error: (message: string, error?: any) => {
+  error: (message: string, error?: unknown) => {
     if (process.env.NODE_ENV === 'development') {
       console.error(`[ERROR] ${message}`, error);
     }
     // Em produção, você pode integrar com serviços como Sentry, LogRocket, etc.
   },
-  info: (message: string, data?: any) => {
+  info: (message: string, data?: LogData) => {
     if (process.env.NODE_ENV === 'development') {
       console.log(`[INFO] ${message}`, data);
     }
   },
-  warn: (message: string, data?: any) => {
+  warn: (message: string, data?: LogData) => {
     if (process.env.NODE_ENV === 'development') {
       console.warn(`[WARN] ${message}`, data);
     }
@@ -42,6 +47,19 @@ interface RelatorioProducao {
 
 interface StoredRelatorioProducao extends RelatorioProducao {
   timestamp: string;
+}
+
+interface Metrics {
+  produtividade: number;
+  eficienciaMeta: number;
+  eficienciaPlanejamento: number;
+}
+
+interface ApiMetrics {
+  totalRelatorios: number;
+  producaoTotal: number;
+  mediaAtingimentoMeta: number;
+  mediaAtingimentoPlanejado: number;
 }
 
 const relatorios: StoredRelatorioProducao[] = [];
@@ -79,7 +97,7 @@ export async function POST(request: NextRequest) {
     const storedRelatorio: StoredRelatorioProducao = { ...relatorio, timestamp: new Date().toISOString() };
     relatorios.push(storedRelatorio);
 
-    const metrics = {
+    const metrics: Metrics = {
       produtividade: relatorio.totalProducao / parseInt(relatorio.horasTrabalhadas),
       eficienciaMeta: relatorio.atingimentoMeta,
       eficienciaPlanejamento: relatorio.atingimentoPlanejado,
@@ -107,7 +125,7 @@ export async function GET() {
       totalRelatorios: relatorios.length
     });
 
-    const metrics = {
+    const metrics: ApiMetrics = {
       totalRelatorios: relatorios.length,
       producaoTotal: relatorios.reduce((sum, r) => sum + r.totalProducao, 0),
       mediaAtingimentoMeta:
