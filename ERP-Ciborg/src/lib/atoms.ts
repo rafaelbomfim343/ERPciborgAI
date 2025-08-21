@@ -31,14 +31,14 @@ export const productionChartDataAtom = atom((get) => {
           date: item.date,
           type: "Produção Real",
           count: item.resolved,
-          periodo: item.created,
+          
           
         },
         {
           date: item.date,
           type: "Produção Planejada",
           count: item.resolved, 
-          periodo: item.created,
+          
           
           
         },
