@@ -1,47 +1,18 @@
 // src/lib/api.ts
-const API_BASE = process.env.NEXT_PUBLIC_API_URL; // URL do Django no Railway
+import type { RelatorioProducao } from '@/types/relatorio';
 
-export type ProdutosVendidos = {
-  produtoA: number;
-  produtoB: number;
-  produtoC: number;
-  produtoD: number;
-};
-
-export type RelatorioProducao = {
-  data: string;
-  horas_trabalhadas: number;
-  meta_producao: number;
-  producao_planejada: number;
-  produto_a_producao: number;
-  produto_b_producao: number;
-  produto_c_producao: number;
-  produto_d_producao: number;
-  produtosVendidos: ProdutosVendidos;
-  produtos_despachados: number;
-  veiculo_entrega: string;
-  observacoes: string;
-};
-
-// Buscar todos os relatórios
-export async function getRelatorios() {
-  const res = await fetch(`${API_BASE}/api/relatorio-producao/list/`);
-  if (!res.ok) throw new Error("Erro ao buscar relatórios");
-  return res.json();
+export async function getRelatorios(): Promise<{ data: RelatorioProducao[]; metrics: any }> {
+  const response = await fetch('http://127.0.0.1:8000/api/relatorio-producao/list/');
+  if (!response.ok) throw new Error('Erro ao buscar relatórios');
+  return response.json();
 }
 
-// Criar um novo relatório
-export async function createRelatorio(data: RelatorioProducao) {
-  const res = await fetch(`${API_BASE}/api/relatorio-producao/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+export async function createRelatorio(relatorio: RelatorioProducao): Promise<RelatorioProducao> {
+  const response = await fetch('http://127.0.0.1:8000/api/relatorio-producao/create/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(relatorio),
   });
-
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Erro ao criar relatório");
-  }
-
-  return res.json();
+  if (!response.ok) throw new Error('Erro ao criar relatório');
+  return response.json();
 }
