@@ -1,20 +1,22 @@
-# Usa a imagem oficial do Python
-FROM python:3.12-slim
+# Base
+FROM python:3.11-slim
 
-# Usa uma imagem leve do Python
-FROM python:3.12-slim
+WORKDIR /app
 
-# Define o diretório de trabalho
-WORKDIR /erp-backend
+# Dependências de sistema
+RUN apt-get update && apt-get install -y \
+    libpq-dev gcc g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copia os arquivos de dependências
+# Copia e instala dependências
 COPY requirements.txt .
-
-# Instala as dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia o projeto para o container
+# Copia aplicação
 COPY . .
 
-# Comando padrão (executa o servidor Django)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Expõe porta do Django
+EXPOSE 8000
+
+# Comando de produção com Gunicorn
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]

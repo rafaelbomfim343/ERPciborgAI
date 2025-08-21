@@ -9,9 +9,9 @@ import MetricCard from "./components/metric-card";
 
 // Dados de condutividade térmica (Alumínio e Controle)
 const conductivityData = [
-  { time: "t1", conductivity: 53, material: "Alumínio" },
-  { time: "t2", conductivity: 48, material: "Alumínio" },
-  { time: "t3", conductivity: 45, material: "Alumínio" },
+  { time: "t1", conductivity: 53, material: "Real" },
+  { time: "t2", conductivity: 48, material: "Real" },
+  { time: "t3", conductivity: 45, material: "Real" },
   { time: "t4", conductivity: 42, material: "Alumínio" },
 
   { time: "t1", conductivity: 50, material: "Controle" },
@@ -28,11 +28,11 @@ const calcAverageConductivity = (data: typeof conductivityData, material: string
 export default function ConductivityChartBlock() {
   // Calcula médias só uma vez
   const avgAluminio = useMemo(
-    () => calcAverageConductivity(conductivityData, "Alumínio"),
+    () => calcAverageConductivity(conductivityData, "Planejada"),
     []
   );
   const avgControle = useMemo(
-    () => calcAverageConductivity(conductivityData, "Controle"),
+    () => calcAverageConductivity(conductivityData, "Real"),
     []
   );
 
@@ -40,19 +40,19 @@ export default function ConductivityChartBlock() {
     <section className="flex h-full flex-col gap-2">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <ChartTitle
-          title="Condutividade Térmica — Alumínio x Controle"
+          title="Produção Planejada vs Produção Real"
           icon={Thermometer}
         />
       </div>
       <div className="flex flex-wrap">
         <div className="my-4 flex w-52 shrink-0 flex-col justify-center gap-6">
           <MetricCard
-            title="Média — Alumínio"
+            title="Média — Real"
             value={avgAluminio}
             color="#60C2FB"
           />
           <MetricCard
-            title="Média — Controle"
+            title="Média — Planejada"
             value={avgControle}
             color="#3161F8"
           />
