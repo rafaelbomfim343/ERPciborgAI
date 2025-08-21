@@ -8,14 +8,14 @@ export type Navigation = {
 };
 
 export const siteConfig = {
-  title: "ERPCiborg-AI",
+  title: "Dashboard Ciborg - UFABC",
   description: "Template for VisActor and Next.js",
 };
 
 export const navigations: Navigation[] = [
   {
     icon: Gauge,
-    name: "PCP",
+    name: "Aluminio",
     href: "/",
   },
   {

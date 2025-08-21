@@ -7,7 +7,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <TopNav title="Planejamento e Controle Da Produção PCP" />
+      <TopNav title="Material Aluminio" />
       <main>{children}</main>
     </>
   );
