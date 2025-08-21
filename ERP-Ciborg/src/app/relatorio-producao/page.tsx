@@ -132,7 +132,6 @@ export default function RelatorioProducaoPage() {
       }
     } catch (error) {
       setErro('Erro de conexão. Tente novamente.');
-      console.error('Erro:', error);
     } finally {
       setCarregando(false);
     }
