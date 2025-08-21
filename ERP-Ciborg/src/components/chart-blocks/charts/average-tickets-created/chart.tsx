@@ -6,6 +6,13 @@ import type { IBarChartSpec } from "@visactor/vchart";
 import { productionChartDataAtom } from "@/lib/atoms";
 import type { ProductionMetric } from "@/types/types";
 
+interface ChartDatum {
+  date?: string;
+  count?: number;
+  type?: string;
+  periodo?: string;
+}
+
 const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
   type: "bar",
   color: ["#2ecc71", "#3498db"],
@@ -27,14 +34,17 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
     trigger: ["click", "hover"],
     mark: {
       title: {
-        value: (_datum) => `Período: ${(_datum as any)?.periodo || 'N/A'}`,
+        value: (datum: ChartDatum | undefined) => 
+          `Período: ${datum?.periodo || datum?.date || 'N/A'}`,
       },
       content: [
         {
-          value: (_datum) => `Quantidade: ${(_datum as any)?.count ?? 0}`,
+          value: (datum: ChartDatum | undefined) => 
+            `Quantidade: ${datum?.count ?? 0}`,
         },
         {
-          value: (_datum) => `Tipo: ${(_datum as any)?.type || 'N/A'}`,
+          value: (datum: ChartDatum | undefined) => 
+            `Tipo: ${datum?.type || 'N/A'}`,
         },
       ],
     },
@@ -50,8 +60,8 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
     },
     style: {
       cornerRadius: [12, 12, 12, 12],
-      zIndex: (datum) => {
-        return (datum as any)?.type === "real" ? 2 : 1;
+      zIndex: (datum: ChartDatum | undefined) => {
+        return datum?.type === "real" ? 2 : 1;
       },
     },
   },
