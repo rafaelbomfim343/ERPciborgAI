@@ -2,7 +2,7 @@ import { addDays, endOfDay, isWithinInterval, startOfDay } from "date-fns";
 import { atom } from "jotai";
 import type { DateRange } from "react-day-picker";
 import { productionData } from "@/data/production-data";
-import type { productionMetric } from "@/types/types";
+import type { ProductionMetric } from "@/types/types";
 
 const defaultStartDate = new Date(2025, 11, 18);
 
@@ -26,7 +26,7 @@ export const productionChartDataAtom = atom((get) => {
       return isWithinInterval(date, { start: startDate, end: endDate });
     })
     .flatMap((item) => {
-      const res: productionMetric[] = [
+      const res: ProductionMetric[] = [
         {
           date: item.date,
           type: "Produção Real",

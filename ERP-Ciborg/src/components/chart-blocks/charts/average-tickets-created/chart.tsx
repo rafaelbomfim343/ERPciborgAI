@@ -4,9 +4,9 @@ import { useAtomValue } from "jotai";
 import { VChart } from "@visactor/react-vchart";
 import type { IBarChartSpec } from "@visactor/vchart";
 import { productionChartDataAtom } from "@/lib/atoms";
-import type { productionMetric } from "@/types/types";
+import type { ProductionMetric } from "@/types/types";
 
-const generateSpec = (data: productionMetric[]): IBarChartSpec => ({
+const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
   type: "bar",
   color: ["#2ecc71", "#3498db"],
   data: [
