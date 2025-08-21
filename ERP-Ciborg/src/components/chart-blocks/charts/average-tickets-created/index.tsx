@@ -3,15 +3,15 @@
 import { useAtomValue } from "jotai";
 import { FilePlus2 } from "lucide-react";
 import { productionChartDataAtom } from "@/lib/atoms";
-import type { productionMetric } from "@/types/types";
+import type { ProductionMetric } from "@/types/types";
 import ChartTitle from "../../components/chart-title";
 import Chart from "./chart";
 import { DatePickerWithRange } from "./components/date-range-picker";
 import MetricCard from "./components/metric-card";
 
 const calMetricCardValue = (
-  data: productionMetric[],
-  type: "Produção Real" | "Produção Planejada",
+  data: ProductionMetric[],
+  type: "Real" | "Planejada",
 ) => {
   const filteredData = data.filter((item) => item.type === type);
   return Math.round(
@@ -22,8 +22,8 @@ const calMetricCardValue = (
 
 export default function AverageTicketsCreated() {
   const ticketChartData = useAtomValue(productionChartDataAtom);
-  const avgCreated = calMetricCardValue(ticketChartData, "Produção Real");
-  const avgResolved = calMetricCardValue(ticketChartData, "Produção Planejada");
+  const avgCreated = calMetricCardValue(ticketChartData, "Real");
+  const avgResolved = calMetricCardValue(ticketChartData, "Planejada");
 
   return (
     <section className="flex h-full flex-col gap-2">
