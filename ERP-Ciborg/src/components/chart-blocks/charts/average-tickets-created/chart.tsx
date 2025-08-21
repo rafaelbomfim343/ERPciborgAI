@@ -37,7 +37,7 @@ const generateSpec = (data: ProductionMetric[]): IBarChartSpec => ({
         value: (datum: ChartDatum | undefined) => 
           `Período: ${datum?.date || 'N/A'}`,
       },
-      content: [
+      content: [ 
         {
           value: (datum: ChartDatum | undefined) => 
             `Quantidade: ${datum?.count ?? 0}`,
