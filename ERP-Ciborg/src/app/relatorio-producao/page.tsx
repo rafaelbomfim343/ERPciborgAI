@@ -169,9 +169,6 @@ export default function RelatorioProducaoPage() {
   }
 
   const totalProducao = calcularTotalProducao();
-  const totalVendas = calcularTotalVendas();
-  const atingimentoMeta = calcularAtingimentoMeta();
-  const atingimentoPlanejado = calcularAtingimentoPlanejado();
 
   return (
     <div className="form-container max-w-4xl mx-auto">
