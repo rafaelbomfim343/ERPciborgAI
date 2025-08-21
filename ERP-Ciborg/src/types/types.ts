@@ -54,7 +54,7 @@ export type RelatorioMetrics = {
 // Tipo para gráficos de produção (opcional)
 export type ProductionMetric = {
   date: string;
-  type: "Produção Real" | "Produção Planejada";
+  type: "Real" | "Planejada";
   count: number;
   
 };
